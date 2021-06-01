@@ -1,24 +1,17 @@
 /*
- * @Description: 
- * @Version: 2.0
- * @Autor: liushuhao
- * @Date: 2021-03-27 22:39:59
- * @LastEditors: liushuhao
- * @LastEditTime: 2021-03-28 20:15:15
- */
-/*
  * @Description:
  * @Version: 2.0
  * @Autor: liushuhao
  * @Date: 2021-03-27 22:39:53
  * @LastEditors: liushuhao
- * @LastEditTime: 2021-03-28 20:13:49
+ * @LastEditTime: 2021-04-01 13:52:49
  */
 
 const { merge } = require('webpack-merge');
 const base = require('./webpack.base.conf');
 const webpack = require('webpack');
 const TerserPlugin = require('terser-webpack-plugin');
+const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 
@@ -39,6 +32,7 @@ module.exports = merge(base, {
     ],
   },
   plugins: [
+    new CleanWebpackPlugin(),
     new webpack.DefinePlugin({
       DEV: JSON.stringify('production'),
     }),

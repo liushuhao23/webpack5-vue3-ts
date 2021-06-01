@@ -4,15 +4,13 @@
  * @Autor: liushuhao
  * @Date: 2021-03-25 09:59:06
  * @LastEditors: liushuhao
- * @LastEditTime: 2021-03-28 21:42:47
+ * @LastEditTime: 2021-04-29 17:26:23
  */
 const path = require('path');
 const htmlWebpackPlugin = require('html-webpack-plugin');
 const { VueLoaderPlugin } = require('vue-loader/dist/index');
-const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const NODE_ENV = process.env.NODE_ENV;
-console.log(NODE_ENV, 'NODE_ENV');
 
 module.exports = {
   mode: 'development',
@@ -22,6 +20,7 @@ module.exports = {
     path: path.resolve(__dirname, '../dist'),
     clean: true,
   },
+
   module: {
     rules: [
       {
@@ -29,18 +28,27 @@ module.exports = {
         use: ['vue-loader'],
       },
       {
-        test: /\.ts$/,
-        exclude: /node_modules/, // 不编译node_modules下的文件
-        use: {
-          loader: 'ts-loader',
-        },
-      },
-      {
         test: /\.js$/,
-        exclude: /node_modules/, // 不编译node_modules下的文件
         use: {
           loader: 'babel-loader',
-        },
+          options: {
+            presets: ['@babel/preset-env']
+          }
+        }
+      },
+      {
+        test: /\.(ts|tsx)$/,
+        exclude: /node_modules/, // 不编译node_modules下的文件
+        use:  [
+          {
+              loader: 'ts-loader',
+              options: {
+                  // 指定特定的ts编译配置，为了区分脚本的ts配置
+                  configFile: path.resolve(__dirname, '../tsconfig.json'),
+                  appendTsSuffixTo: [/\.vue$/]
+              }
+          }
+      ]
       },
       {
         test: /\.css$/,
@@ -49,6 +57,7 @@ module.exports = {
             loader: MiniCssExtractPlugin.loader,
           },
           'css-loader',
+          'postcss-loader',
         ],
       },
       {
@@ -63,31 +72,28 @@ module.exports = {
         ],
       },
       {
-        test: /\.(png|jpg|gif|jpeg)$/,
-        type: 'asset',
-        parser: {
-          dataUrlCondition: {
-            maxSize: 8 * 1024,
-          },
-        },
+        test: /\.(png|svg|jpg|jpeg|gif)$/i,
+        type: 'asset/resource',
       },
       {
-        test: /\.svg/,
-        type: 'asset/inline', // inline 的时候不需要指定文件名
-      },
-      {
-        test: /\.txt/,
-        type: 'asset',
-        parser: {
-          dataUrlCondition: {
-            maxSize: 4 * 1024, // 4kb  指定大小
-          },
-        },
+        test: /\.(woff|woff2|eot|ttf|otf)$/i,
+        type: 'asset/resource',
       },
     ],
   },
+  resolve: {
+    extensions: [
+      '.tsx',
+      '.ts',
+      '.mjs',
+      '.js',
+      '.jsx',
+      '.vue',
+      '.json',
+      '.wasm',
+    ],
+  },
   plugins: [
-    new CleanWebpackPlugin(),
     new VueLoaderPlugin(),
     new htmlWebpackPlugin({
       template: path.resolve(__dirname, '../index.html'),
