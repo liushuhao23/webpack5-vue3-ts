@@ -60,10 +60,6 @@ export default {
     this.screenHeight = this.$el.clientHeight;
     this.start = 0;
     this.end = this.start + this.visibleCount;
-    console.log(this.end, "end");
-    console.log(this.start, "start");
-    console.log(this.screenHeight);
-    console.log(this.visibleData, "222");
   },
   data() {
     return {

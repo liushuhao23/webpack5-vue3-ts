@@ -1,0 +1,81 @@
+<!--
+ * @Description: 
+ * @Version: 2.0
+ * @Autor: liushuhao
+ * @Date: 2021-06-09 15:02:29
+ * @LastEditors: liushuhao
+ * @LastEditTime: 2021-06-30 16:16:27
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=760,user-scalable=no,viewport-fit=cover">
+    <title>Document</title>
+    <style>
+       .test{
+           width: 100px;
+           height: 100px;
+           border: 1px solid red;
+       }
+    </style>
+</head>
+
+<body>
+    <h2>页面标题</h2>
+    <div class="test">
+        <span>111</span>
+    </div>
+</body>
+
+</html>
+<script>
+
+    // // // let result = new a();
+    // let obj = {};
+    // // obj.prototype = a.prototype;
+    // let res=  Object.setPrototypeOf(obj, a.prototype)
+    // a.call(res)
+    // console.log(res, '222');
+    // res.test1()
+    // console.dir(result, 'aa');
+
+    // function handlerNum(n) {
+    //     if (n / 9 > 16) return -1
+
+    //     let res = 0
+    //     for (let i = 0, imax = 16; i <= imax; i++) {
+    //         if (n > 9) {
+    //             res += Math.pow(10, i) * 9
+    //             n -= 9
+    //             continue
+    //         }
+    //         res += Math.pow(10, i) * n
+    //         break
+    //     }
+
+    //     return res
+    // }
+    // console.log(handlerNum(11));
+    // new 创建一个新对象,
+    // 设置原型,将新对象的原型绑定到构造函数上
+    // 并绑定参数
+    // 判断类型，返回结果
+    let a = function (name, age) {
+        this.age = name;
+        this.name = age
+        // return 1
+    }
+    a.prototype.test1 = function () {
+        console.log(this.age, '+++', this.name);
+    }
+    let myNew = function (fn, ...args) {
+        let obj = Object.create(fn.prototype)
+        let result = fn.apply(obj, args);
+        return result instanceof Object ? result : obj;
+    }
+    let z = myNew(a, 1, 2);
+    z.test1()
+    console.log(myNew(a));
+</script>

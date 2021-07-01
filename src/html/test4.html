@@ -1,0 +1,148 @@
+<!--
+ * @Description: 
+ * @Version: 2.0
+ * @Autor: liushuhao
+ * @Date: 2021-06-15 15:14:50
+ * @LastEditors: liushuhao
+ * @LastEditTime: 2021-06-29 13:21:40
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>
+<script>
+// function curry (fn, currArgs) {
+//     // console.log(fn, '++', currArgs);
+//     // console.log(fn.length, 'iiii');
+//     return function() {
+//         let args = [...arguments]
+//         if (currArgs !== undefined) {
+//             args = args.concat(currArgs);
+//         }
+//         // 递归调用
+//         if (args.length < fn.length) {
+//             return curry(fn, args);
+//         }
+
+//         // 递归出口
+//         return fn.apply(null, args);
+//     }
+// }
+// function sum(a, b, c, d) {
+//     console.log(a + b + c+  d);
+// }
+// const fns = curry(sum);
+// fns(1)(2, 4)(3)
+
+
+// function add() {
+//     let args = [...arguments];
+//     var fn = function () {
+//         args.push(...arguments);
+//         return fn;
+//     }
+//     fn.toString = function () {
+//         let result = 0;
+//         for (let i = 0; i < args.length; i += 1) {
+//             result += args[i];
+//         }
+//         return result
+//     }
+//     return fn
+// }
+
+// let adds = function() {
+//     let args = [...arguments];
+//     let fn = function() {
+//         args.push(...arguments);
+//         return fn;
+//     }
+//     fn.toString = function() {
+//         let result = 0;
+//         args.forEach((item) => {
+//             result += item;
+//         });
+//         return result
+//     }
+//     return fn;
+// }
+// console.log(adds(1), 'll');
+
+// function curry (fn, currArgs) {
+//     // console.log(fn, '++', currArgs);
+//     // console.log(fn.length, 'iiii');
+//     return function() {
+//         let args = [...arguments]
+//         if (currArgs !== undefined) {
+//             args = args.concat(currArgs);
+//         }
+//         // 递归调用
+//         if (args.length < fn.length) {
+//             return curry(fn, args);
+//         }
+
+//         // 递归出口
+//         return fn.apply(null, args);
+//     }
+// }
+function curry(fn, currArgs) {
+    return function() {
+        let args = [...arguments];
+        if (currArgs) {
+            args.push(...currArgs);
+        }
+        if (args.length < fn.length) {
+            return curry(fn, args)
+        }
+        return fn.apply(null, args)
+    }
+}
+function curry1() {
+    let args = [...arguments];
+    let fn = function() {
+        args.push(...arguments);
+        return fn;
+    }
+    fn.toString= function() {
+        let result = 0;
+        args.forEach(item => {
+            result += result;
+        });
+        return result;
+    }
+    return fn
+}
+function add() {
+   let args = [...arguments];
+   let fn = function() {
+    args.push(...arguments);
+     return fn;
+   }
+   fn.toString = function() {
+       let result = 0;
+        args.forEach(item => {
+            result += item;
+        });
+        return result
+   }
+   return fn
+ }
+ let result = add(1)(2)(3);
+ console.log(result.toString()); 
+
+// console.log(add(1)(2)(3)); 
+// function sum(a, b, c, d) {
+//     console.log(a + b + c+  d);
+// }
+// const fns = curry1(1)(2)(3, 4)(10);
+// console.log(fns());
+// fns(1)(2, 4)(3)
+</script>

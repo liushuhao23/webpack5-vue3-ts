@@ -4,7 +4,7 @@
  * @Autor: liushuhao
  * @Date: 2021-04-01 10:16:44
  * @LastEditors: liushuhao
- * @LastEditTime: 2021-05-28 22:16:41
+ * @LastEditTime: 2021-07-01 14:24:57
  */
 
 import { createRouter, createWebHashHistory, createWebHistory, RouteRecordRaw } from 'vue-router'
@@ -42,6 +42,21 @@ const routes: Array<RouteRecordRaw> = [
     path: '/bigList',
     name: 'bigList',
     component: () => import('../views/bigList.vue'),
+  },
+  {
+    path: '/inherit',
+    name: 'inherit',
+    component: () => import('../views/inherit.vue'),
+  },
+  {
+    path: '/lazyImg',
+    name: 'lazyImg',
+    component: () => import('../views/lazyImg/test.vue'),
+  },
+  {
+    path: '/linkList',
+    name: 'linkList',
+    component: () => import('../views/LinkedList.vue'),
   },
   {
     path: '/test/test1',

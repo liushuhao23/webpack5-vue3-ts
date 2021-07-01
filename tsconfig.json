@@ -17,8 +17,9 @@
       // add path to @types
       "node_modules/@types"
     ],
+    "downlevelIteration": true, // 允许迭代
     // 以严格模式解析
-    "strict": true,
+    "strict": false,
     // 在.tsx文件里支持JSX
     "jsx": "preserve",
     // 使用的JSX工厂函数
@@ -43,6 +44,7 @@
       "es5",
       "es6",
       "es7",
+      "dom.iterable",
       "es2015.promise"
     ],
     "sourceMap": true,

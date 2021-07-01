@@ -4,7 +4,7 @@
  * @Autor: liushuhao
  * @Date: 2021-04-01 10:17:55
  * @LastEditors: liushuhao
- * @LastEditTime: 2021-05-31 16:49:29
+ * @LastEditTime: 2021-06-30 20:16:48
 -->
 <template>
   <div>
@@ -18,6 +18,9 @@
     <button @click="gotree">测试树</button>
     <button @click="goanimation">测试动画</button>
     <button @click="gobigList">长列表</button>
+    <button @click="goinherit">继承</button>
+    <button @click="goLinkList">链表</button>
+    <button @click="goLazyImg">图片懒加载</button>
     <div class="bigListContent">
       <VirtualList :listData="data" :itemSize="100"/>
     </div>
@@ -73,7 +76,15 @@ export default {
     }
     const gobigList = () => {
       router.push({ path: '/bigList' })
-      
+    }
+    const goinherit = () => {
+      router.push({ path: '/inherit' })
+    }
+    const goLinkList = () => {
+      router.push({ path: '/linkList' })
+    }
+    const goLazyImg = () => {
+      router.push({ path: '/lazyImg' })
     }
     return {
       object1,
@@ -82,7 +93,10 @@ export default {
       gotest3,
       gotree,
       goanimation,
-      gobigList
+      gobigList,
+      goinherit,
+      goLinkList,
+      goLazyImg,
     }
   },
 };

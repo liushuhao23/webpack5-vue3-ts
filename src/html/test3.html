@@ -1,0 +1,155 @@
+<!--
+ * @Description: 
+ * @Version: 2.0
+ * @Autor: liushuhao
+ * @Date: 2021-06-11 15:41:14
+ * @LastEditors: liushuhao
+ * @LastEditTime: 2021-06-30 17:27:51
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+    Function.prototype.Mycall = function (content, ...args) {
+        if (typeof this !== 'function') {
+            return new Error('type error')
+        }
+        content = content || window;
+        content.fn = this;
+        let result = null;
+        result = content.fn(...args);
+        delete content.fn;
+        return result;
+    }
+    Function.prototype.myApply = function (content, args) {
+        if (typeof this !== 'function') {
+            return new Error('type error')
+        }
+        if (!Array.isArray(args)) {
+            return new Error('第二个参数应该为数组')
+        }
+        let result = null;
+        content = content || window;
+        content.fn = this;
+        if (!args) {
+            result = content.fn();
+        } else {
+            result = content.fn(...args);
+        }
+        delete content.fn;
+        return result;
+    }
+    // Function.prototype.myBind = function(content) {
+    //     let args = [...arguments].splice(1)
+    //     let that =this;
+    //     let toFind = function() {
+    //         let isNew = this instanceof toFind;
+    //         const fn = isNew? this: Object(content)
+    //         return that.apply(content, args.concat([...arguments]))
+    //     }
+    //     return toFind;
+    // }
+
+    Function.prototype.MyBind = function(content) {
+        let that = this;
+        let args = [...arguments].splice(1);
+        let findT = function() {
+            let isNew  = this instanceof findT; // 是否是new调用
+            let result = isNew? this: Object(content);
+            return that.apply(result, args.concat(...arguments))
+        }
+        return findT
+    }
+
+    Function.prototype.myCall = function(content, ...args) {
+        content = content || window;
+        content.fn = this;
+        let result =  null;
+        result = content.fn(...args);
+        delete content.fn;
+        return result
+    }
+
+    let myNew = function(obj) {
+        let args = [...arguments].splice(1);
+        let Obj = Object.create(obj.prototype);
+        let result = obj.call(Obj, ...args);
+        return obj instanceof Object ? result : obj
+    };
+    // let myNew = function (fn, ...args) {
+    //     let obj = Object.create(fn.prototype)
+    //     let result = fn.apply(obj, args);
+    //     return result instanceof Object ? result : obj;
+    // }
+    let a = function (name, age) {
+        this.age = name;
+        this.name = age
+        // return 1
+    }
+    a.prototype.test1 = function () {
+        console.log(this.age, '+++', this.name);
+    }
+
+    let z = myNew(a, 1, 2);
+    // z.test1()
+
+    let myInstanceOf = function(left, right) {
+        let leftN = Object.getPrototypeOf(left);
+        let rightN  = right.prototype;
+        while(true) {
+            if (!leftN)  return false;
+            if (leftN === rightN) {
+                return true
+            }
+            leftN = Object.getPrototypeOf(leftN)
+        }
+    }
+    let MyInstanceOf = function (left, right) {
+        let leftN = Object.getPrototypeOf(left);
+        let rightN = right.prototype;
+        while(true) {
+            if (!leftN) return false;
+            if (leftN === rightN) return true;
+            leftN = Object.getPrototypeOf(leftN);
+        }
+    }
+    // console.log(myInstanceOf({}, ));
+    console.log(MyInstanceOf('', String) );
+    // let obj = {
+    //     name: 'obj name',
+    //     say: function() {
+    //         console.log(this.name, '9999');
+    //     }
+    // }
+    // let fn = function(name) {
+    //     // console.log(this.name);
+    //     console.log([...arguments]);
+    //     this.name = name;
+    //     console.log(this.name);
+    // }
+    // let s = fn.myBind(obj);
+    // s();
+    // console.log(s());
+    // s.say()
+    // console.log(s());
+    // console.dir(s)
+    // let a = new s('jkjj')
+    // function k(name, age) {
+    //     console.log(name, 'name');
+    //     console.log(age, 'age');
+    //     console.log(this, 'ioo');
+    // }
+    // k.myApply({}, ['kkk', '88'])
+</script>

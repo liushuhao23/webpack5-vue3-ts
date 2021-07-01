@@ -1,0 +1,309 @@
+<!--
+  @Description: 
+  @Version: 2.0
+  @Autor: liushuhao
+  @Date: 2021-06-21 13:59:43
+ * @LastEditors: liushuhao
+ * @LastEditTime: 2021-06-25 15:19:03
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+    let link = {
+        val: 1,
+        next: {
+            val: 2,
+            next: {
+                val: 3,
+                next: {
+                    val: 4,
+                    next: {
+                        val: 5,
+                        next: {
+                            val: 6,
+                            next: {
+                                val: 7,
+                                next: {
+                                    val: 8,
+                                    next: {
+                                        val: 9,
+                                        next: {
+                                            val: 10,
+                                            next: null
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    let l2 = {
+        val: 5,
+        next: {
+            val: 9,
+            next: {
+                val: 2,
+                next: null
+            }
+        }
+    }
+    // let lik = {
+    //     val: 1,
+    //     next: {
+    //         val: 2,
+    //         next: {
+    //             val: 3,
+    //             next: null,
+    //         }
+    //     }
+    // }
+    // let test1 = (lik, index) => {
+    //     if (lik.val == 3) {
+    //         return [];
+    //     }
+    //     let a = 2;
+    //     index += 1;
+    //     let result = test1(lik.next, index);
+    //     console.log(index);
+    //     console.log(lik, '222');
+    // }
+    // test1(lik, 0)
+
+    function ListNode(val) {
+        this.val = val;
+        this.next = null;
+    }
+    var addTwoNumbersz = function (l1, l2) {
+        let p1 = l1;
+        let p2 = l2;
+        let result = 0;
+        let pre = 0;
+        let p = new ListNode(0);
+        let b = p;
+        while (p1 && p2) {
+            result = (p1.val * 1) + (p2.val * 1) + pre;
+            if (result >= 10) {
+                pre = 1;
+                result = result - 10
+            } else {
+                pre = 0;
+            }
+            if (p1) {
+                p1 = p1.next;
+            }
+            if (p2) {
+                p2 = p2.next;
+            }
+            let s = new ListNode(result);
+            b.next = s;
+            b = b.next;
+        }
+        return p.next
+    };
+
+    var splitListToParts = function(head, k) {
+        let len = 0;
+        let item = head;
+        while(item) {
+            len++;
+            item = item.next;
+        }
+        let itemLength = Math.floor(len / k);
+        let addLength = len % k;
+        let arr = [];
+        let cur = head;
+        // for (let i = 0; i < k; i++) {
+        //     arr[i] = cur;
+        //     let leng = i < addLength ? 1: 0;
+        //     let nodelength = leng + itemLength;
+        //     while (nodelength > 1 ) {
+        //         cur= cur.next;
+        //         nodelength -= 1;  
+        //     }
+        //     if (cur) {
+        //         let next = cur.next;
+        //         cur.next = null;
+        //         cur= next;
+        //     } 
+        // }
+        for (let i = 0; i < k; i += 1) {
+            let temp = new ListNode(0);
+            let write = temp;
+            for (let j = 0; j < itemLength + (i< addLength? 1 : 0); j++) {
+                write = write.next = new ListNode(cur.val);
+                if (cur) cur = cur.next; 
+            }
+            arr[i] = temp.next;
+        }
+        return arr
+    }
+    let data2 = {
+        val: 1,
+        next: {
+            val: 2,
+            next: {
+                val: 3,
+                next: {
+                    val: 4,
+                    next: {
+                        val: 5,
+                        next: null,
+                    }
+                }
+            }
+        }
+    }
+    var reverseBetween = function(head, left, right) {
+        let index = 0;
+        let leng = 0;
+        let cur = head;
+        while(cur) {
+            leng++;
+            cur = cur.next;
+        }
+        let temp = head;
+        let leftBeforeNode = null;
+        let rightNextNode = null;
+        let newList = new ListNode(0);
+        for (let i = 1; i < leng; i++) {
+            if ( i  + 1 === left) {
+                leftBeforeNode= temp;
+                newList.next = temp.next;
+            } 
+            if ( i  === right) {
+                rightNextNode = temp.next;
+                temp.next = null;
+            }
+            temp = temp.next;
+        }
+        let pre = null;
+
+        // console.log(leftBeforeNode, 'leftBeforeNode');
+        // console.log(rightNextNode, 'rightNextNode');
+    };
+    let a1 = {
+        val: 6,
+        next: {
+            val: 1,
+            next: {
+                val: 7,
+                next: null,
+            }
+        }
+    }
+    let a2 = {
+        val: 2,
+        next: {
+            val: 9, 
+            next: {
+                val: 5,
+                next: null
+            }
+        }
+    }
+    var addTwoNumbers = function(l1, l2) {
+        let p1 = l1;
+        let p2 = l2;
+        let pre = 0;
+        let p = new ListNode(0);
+        let cur = p;
+        while ( p1 || p2) {
+            let p1val = p1? p1.val: 0;
+            let p2val = p2? p2.val: 0;
+            let sum = p1val + p2val + pre;
+            let result =  sum % 10;
+            pre = Math.floor(sum / 10);
+            cur.next = new ListNode(result);
+            cur = cur.next;
+            if (p1) {p1 = p1.next}
+            if (p2) {p2 = p2.next}
+        }
+        if (pre) {
+            cur.next = new ListNode(pre)
+        }
+        return p.next;
+    }
+    console.log(addTwoNumbers(a1, a2));
+    // reverseBetween(data2, 2, 4) 
+    var removeNthFromEnd = function(head, n) {
+        let cur = new ListNode(0);
+        cur.next = head;
+        let p1 = head;
+        let p2 = head;
+        for (let i = 0; i < n; i++) {
+            p2 = p2.next;
+        }
+        while(p2.next) {
+            p1 = p1.next;
+            p2 = p2.next;
+        }
+        p1.next= p1.next.next;
+        return cur.next
+    }
+
+    var splitListToParts = function(root, k) {
+        let len = 0;
+        let cur = root;
+        while(cur) {
+            len++;
+            cur = cur.next;
+        }
+        let pre = len % k
+        let itemLength = Math.floor(len / k);
+        let temp = new ListNode(0);
+        temp = root;
+        let arr= [];
+        for(let i = 0; i < len; i+= 1) {
+            arr[i] =temp;
+            let addl = i < pre? 1: 0;
+            let nodeL = itemLength + addl;
+            while(nodel > 1) {
+                temp = temp.next;
+                nodeL--;
+            }
+            if (temp) {
+                let cur = temp.next;
+                temp.next = null;
+                cur = temp;
+            }
+
+        }
+    }
+    // splitListToParts(link, 6);
+    var swapPairs = function(head) {
+        let cur = new ListNode(0);
+        cur.next = head;
+        let temp = cur;
+        while(temp.next && temp.next.next) {
+            let n1 = temp.next;
+            let n2 = temp.next.next;
+            temp.next = n2;
+            n1.next = n2.next;
+            n2.next = n1;
+            temp = n1
+        }
+        return cur.next;
+    };
+    swapPairs(data2)
+    // console.log(splitListToParts(link,  3));
+    
+
+
+    // console.log(addTwoNumbersz(l1, l2)); 
+</script>

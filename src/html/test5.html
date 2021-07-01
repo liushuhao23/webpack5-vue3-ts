@@ -1,0 +1,66 @@
+<!--
+ * @Description: 
+ * @Version: 2.0
+ * @Autor: liushuhao
+ * @Date: 2021-06-15 20:38:13
+ * @LastEditors: liushuhao
+ * @LastEditTime: 2021-06-16 11:16:38
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+    let args = [[["a", "b", "c"],[1, 2, 3]],[["a", "b", "c"],[1, 2, 3]]]
+    let flatten = function (args) {
+        let result = [];
+        const flattens = function (stack, result) {
+            for (let j = 0; j < stack.length; j += 1) {
+                if (Array.isArray(stack[j])) {
+                    flattens(stack[j], result)
+                } else {
+                    result.push(stack[j])
+                }
+            }
+        }
+        for (let i = 0; i < args.length; i += 1) {
+            flattens(args[i], result)
+        }
+        return result;
+    }
+
+    let flatArgs = [1, 2, [3, 4, [5, 6, 7]], 9, [10, 11]];
+    let flat = function (args) {
+        let result = [];
+        let arr = [];
+        let flats = (stack) => {
+            for (let j = 0; j < stack.length; j += 1 ) {
+                if (Array.isArray(stack[j])) {
+                    flats(stack[j])
+                    continue
+                } 
+                result.push(stack[j])
+            }
+        }
+        for (let i = 0; i < args.length; i += 1) {
+            if ( Array.isArray(args[i])) {
+                flats(args[i])
+            } else {
+                result.push(args[i])
+            }
+        }
+        return result
+    }
+    console.log(flat(flatArgs)); 
+</script>

@@ -4,7 +4,7 @@
  * @Autor: liushuhao
  * @Date: 2021-05-06 14:43:16
  * @LastEditors: liushuhao
- * @LastEditTime: 2021-05-07 13:55:36
+ * @LastEditTime: 2021-07-01 17:49:16
  */
 
 // // [propName: string]: any;
@@ -60,7 +60,7 @@ const deepClone1 = (target: any, hash = new WeakMap()): any => {
     let result: any;
 
     if (checkoutType(target) === 'Object') { result = {}};
-    if (checkoutType(target) === 'Arrary') { result = []};
+    if (checkoutType(target) === 'Array') { result = []};
     hash.set(target, result);
     
     Reflect.ownKeys(target).forEach((key) => {

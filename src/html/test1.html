@@ -1,0 +1,48 @@
+<!--
+ * @Description: 
+ * @Version: 2.0
+ * @Autor: liushuhao
+ * @Date: 2021-06-08 15:06:49
+ * @LastEditors: liushuhao
+ * @LastEditTime: 2021-06-08 15:54:41
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+</html>
+<script>
+    let parent = function (name, age) {
+        this.name = name;
+        this.age = age;
+        this.arr = [111, 222]
+    }
+    parent.prototype.test1 = function () {
+        console.log(this.name + '===' + this.age);
+        console.log(this.sex, 'kkk');
+    }
+    let son = function (sex) {
+        this.sex = sex;
+        parent.call(this, '222', '999')
+    }
+    let parasitic = function (parent , son) {
+        let prototype = Object.create(parent.prototype);
+        prototype.constructor = son;
+        son.prototype = prototype;
+    }
+    parasitic(parent, son)
+    let son1 = new son('人妖');
+    let son2 = new son('变态');
+    son1.arr.push('pppp')
+    son2.test1()
+    console.log(son2);
+    console.log(son1);
+
+</script>
