@@ -4,7 +4,7 @@
  * @Autor: liushuhao
  * @Date: 2021-07-01 11:20:16
  * @LastEditors: liushuhao
- * @LastEditTime: 2021-07-01 17:52:13
+ * @LastEditTime: 2021-07-02 09:19:58
  */
 type deepDataType = object | [] | null | Symbol;
 /**
@@ -50,47 +50,45 @@ const isObj = (target: unknown) => {
 }
 const checkoutType = (target: any): string => Object.prototype.toString.call(target).slice(8, -1);
 
-const deepClone = (target: any, hash = new WeakMap()): any => {
-    if (!isObj(target)) return target;
-    if (hash.has(target)) return hash.get(target);
+// const deepClone = (target: any, hash = new WeakMap()): any => {
+//     if (!isObj(target)) return target;
+//     if (hash.has(target)) return hash.get(target);
     
-    let result: any = null;
-
-    if (checkoutType(target) === 'Object') { result = {}};
-    if (checkoutType(target) === 'Array') { result = []};
-    hash.set(target, result);
-    console.log(result);
-    
-    Reflect.ownKeys(target).forEach((key) => {
-        if(Object.prototype.hasOwnProperty.call(target, key)) {
-            if (isObj(target[key])) {
-                result[key] = deepClone(target[key], hash);
-            } else {
-                result[key] = target[key];
-            }
-        }
-    })
-    return result;
-}
-
-// const isObject = (target: any) => (typeof target === "object" || typeof target === "function") && target !== null;
-
-// let deepClone = function (data: deepDataType, hash = new WeakMap()) {
-//     if (!checkObj) return data;
-//     if (hash.has(data)) return hash.get(data);
 //     let result: any = null;
 
-//     isArraryObject(data) === 'Object' ? result = {} : (isArraryObject(data) === 'Array' ? result = [] : result = null);
-//     hash.set(data, result);
-//     Reflect.ownKeys(data).forEach((key) => {
-//         if (Object.prototype.hasOwnProperty.call(data, key)) {
-//             if (isArraryObject(data[key  as keyof typeof data]) === 'Object') {
-//                 result[key] = deepClone(data[key  as keyof typeof data], hash)
-//             } else if (isArraryObject(data[key  as keyof typeof data]) === 'Arrary') {
-//                 result[key] = data[key as keyof typeof data]
+//     if (checkoutType(target) === 'Object') { result = {}};
+//     if (checkoutType(target) === 'Array') { result = []};
+//     hash.set(target, result);
+//     Reflect.ownKeys(target).forEach((key) => {
+//         if(Object.prototype.hasOwnProperty.call(target, key)) {
+//             if (isObj(target[key])) {
+//                 result[key] = deepClone(target[key], hash);
+//             } else {
+//                 result[key] = target[key];
 //             }
 //         }
 //     })
-//     return result
+//     return result;
 // }
+
+const isObject = (target: any) => (typeof target === "object" || typeof target === "function") && target !== null;
+
+let deepClone = function (data: deepDataType, hash = new WeakMap()) {
+    if (!checkObj) return data;
+    if (hash.has(data)) return hash.get(data);
+    let result: any = null;
+
+    isArraryObject(data) === 'Object' ? result = {} : (isArraryObject(data) === 'Array' ? result = [] : result = null);
+    hash.set(data, result);
+    Reflect.ownKeys(data).forEach((key) => {
+        if (Object.prototype.hasOwnProperty.call(data, key)) {
+            if (isArraryObject(data[key  as keyof typeof data]) === 'Object') {
+                result[key] = deepClone(data[key  as keyof typeof data], hash)
+            } else {
+                result[key] = data[key as keyof typeof data]
+            }
+        }
+    })
+    return result
+}
 export { debounce, deepClone }

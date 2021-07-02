@@ -4,15 +4,15 @@
  * @Autor: liushuhao
  * @Date: 2021-07-01 14:16:55
  * @LastEditors: liushuhao
- * @LastEditTime: 2021-07-01 14:54:14
+ * @LastEditTime: 2021-07-02 09:42:08
 -->
 <template>
   <div class='imgContent'>
       <div class="imgLists">
         <lazyImg
             :data='ImgObject.data'
-            :placeholderImg='ImgObject.img'
-            :height='ImgObject.height'
+            :placeholderImg='ImgObject.placeholderImg'
+            :height='ImgObject.itemheight'
         ></lazyImg>
       </div>
   </div>
@@ -20,12 +20,12 @@
 
 <script lang='ts'>
 import { nextTick, reactive, } from 'vue';
-import lazyImg from  './lazyImg.vue'
+// import lazyImg from  './lazyImg.vue'
 
 export default {
    name: 'test',
    components: {
-       lazyImg
+      //  lazyImg
    },
    setup() {
 
@@ -67,7 +67,7 @@ export default {
     let ImgObject = {
         data: objs,
         placeholderImg: 'https://img1.baidu.com/it/u=3922824968,844223838&fm=26&fmt=auto&gp=0.jpg',
-        itemheight: 100
+        itemheight: 200
     }
     return {
         ImgObject

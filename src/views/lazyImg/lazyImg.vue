@@ -4,79 +4,56 @@
  * @Autor: liushuhao
  * @Date: 2021-06-30 20:16:15
  * @LastEditors: liushuhao
- * @LastEditTime: 2021-07-01 17:50:55
+ * @LastEditTime: 2021-07-02 15:08:55
 -->
 <template>
   <div class="lazyImg">
     <div class="imgList" id="imgList">
-      <!-- <div class="img_item" v-for="(item, index) in imgData" :key="index">
+      <div
+        class="img_item"
+        :style="{ height: heightw + 'px' }"
+        v-for="(item, index) in imgData"
+        :key="index"
+      >
         <div class="img_content">
           <img :src="loadingUrl" :data-src="item.url" alt="" class="lazy_img" />
         </div>
-      </div> -->
+      </div>
     </div>
   </div>
 </template>
 
 <script lang='ts'>
-import { nextTick, onMounted, reactive, ref } from "vue";
+import { nextTick, onMounted, reactive, ref, getCurrentInstance, provide, readonly} from "vue";
 import { useRouter } from "vue-router";
-import { debounce, deepClone } from '../../ts/utils'
+import  childrens from "./children.vue";
+
+import { debounce, deepClone } from "../../ts/utils";
+
 
 export default {
-  name: 'lazyImg',
+  name: "lazyImg",
   props: {
     data: {
       type: Object,
-      default: {}
+      default: {},
     },
     placeholderImg: {
       type: String,
     },
     height: {
-      type: String || Number,
-    }
+      type:  Number || String,
+    },
   },
-  setup(props) {
-    // let result = [];
-    // let loadingUrl = ref("");
-    // result.push(...objs);
-    // let imgData = reactive(result);
-
+  components: {
+    childrens
+  },
+  setup(props, ctx) {
+    let instance = getCurrentInstance();
+    let imgData = deepClone(props.data);
+    let loadingUrl = props.placeholderImg;
+    let heightw = props.height;
     onMounted(() => {
-      console.log(props.data, 'data');
-      let test = {
-        a: {
-          b: 3,
-          c: {
-            f:4,
-          }
-        },
-        k: 'jjjj'
-      }
-      let s = [
-          {
-            a: {
-              b: 3,
-              c: {
-                f:4,
-              }
-            },
-            k: 'jjjj'
-          },
-          {
-            a: {
-              b: 3,
-              c: {
-                f:4,
-              }
-            },
-            k: 'jjjj'
-          },
-      ]
-      let imgData = deepClone(s)
-      console.log(imgData, 'imgData');
-      
       let windowHeight = window.innerHeight;
       let check = (item: any) => {
         const isUp =
@@ -103,15 +80,16 @@ export default {
         }
       };
       lazyLoad();
-      let scroll = debounce(lazyLoad, 50, true)
+      let scroll = debounce(lazyLoad, 50, true);
       window.addEventListener("scroll", () => {
-        scroll()
+        scroll();
       });
     });
 
     return {
-      // imgData,
-      // loadingUrl,
+      imgData,
+      loadingUrl,
+      heightw,
     };
   },
 };
