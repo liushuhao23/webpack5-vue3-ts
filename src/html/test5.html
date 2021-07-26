@@ -4,7 +4,7 @@
  * @Autor: liushuhao
  * @Date: 2021-06-15 20:38:13
  * @LastEditors: liushuhao
- * @LastEditTime: 2021-06-16 11:16:38
+ * @LastEditTime: 2021-07-11 11:09:20
 -->
 <!DOCTYPE html>
 <html lang="en">
@@ -22,7 +22,16 @@
 
 </html>
 <script>
-    let args = [[["a", "b", "c"],[1, 2, 3]],[["a", "b", "c"],[1, 2, 3]]]
+    let args = [
+        [
+            ["a", "b", "c"],
+            [1, 2, 3]
+        ],
+        [
+            ["a", "b", "c"],
+            [1, 2, 3]
+        ]
+    ]
     let flatten = function (args) {
         let result = [];
         const flattens = function (stack, result) {
@@ -40,27 +49,65 @@
         return result;
     }
 
-    let flatArgs = [1, 2, [3, 4, [5, 6, 7]], 9, [10, 11]];
-    let flat = function (args) {
-        let result = [];
-        let arr = [];
-        let flats = (stack) => {
-            for (let j = 0; j < stack.length; j += 1 ) {
-                if (Array.isArray(stack[j])) {
-                    flats(stack[j])
-                    continue
-                } 
-                result.push(stack[j])
+    // let flatArgs = [1, 2, [3, 4, [5, 6, 7]], 9, [10, 11]];
+    // let flat = function (args) {
+    //     let result = [];
+    //     let arr = [];
+    //     let flats = (stack) => {
+    //         for (let j = 0; j < stack.length; j += 1 ) {
+    //             if (Array.isArray(stack[j])) {
+    //                 flats(stack[j])
+    //                 continue
+    //             } 
+    //             result.push(stack[j])
+    //         }
+    //     }
+    //     for (let i = 0; i < args.length; i += 1) {
+    //         if ( Array.isArray(args[i])) {
+    //             flats(args[i])
+    //         } else {
+    //             result.push(args[i])
+    //         }
+    //     }
+    //     return result
+    // }
+    // console.log(flat(flatArgs)); 
+    let childrenTree = {
+        val: 5,
+        left: {
+            val: 3,
+            left: {
+                val: 2,
+                left: {
+                    val: 1
+                }
+            },
+            right: {
+                val: 4
+            }
+        },
+        right: {
+            val: 6,
+            right: {
+                val: 8,
+                left: {
+                    val: 7,
+                },
+                right: {
+                    val: 9
+                }
             }
         }
-        for (let i = 0; i < args.length; i += 1) {
-            if ( Array.isArray(args[i])) {
-                flats(args[i])
-            } else {
-                result.push(args[i])
-            }
-        }
-        return result
     }
-    console.log(flat(flatArgs)); 
+    const inorder = (node, res) => {
+        if (!node) {
+            return;
+        }
+        inorder(node.left, res);
+        res.push(node.val);
+        inorder(node.right, res);
+    }
+    const res = [];
+    inorder(childrenTree, res);
+    console.log(res, '222');
 </script>

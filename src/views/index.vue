@@ -4,7 +4,7 @@
  * @Autor: liushuhao
  * @Date: 2021-04-01 10:17:55
  * @LastEditors: liushuhao
- * @LastEditTime: 2021-06-30 20:16:48
+ * @LastEditTime: 2021-07-05 09:53:40
 -->
 <template>
   <div>
@@ -21,6 +21,7 @@
     <button @click="goinherit">继承</button>
     <button @click="goLinkList">链表</button>
     <button @click="goLazyImg">图片懒加载</button>
+    <button @click="goFailure">文件加载失败重试测试</button>
     <div class="bigListContent">
       <VirtualList :listData="data" :itemSize="100"/>
     </div>
@@ -86,6 +87,9 @@ export default {
     const goLazyImg = () => {
       router.push({ path: '/lazyImg' })
     }
+    const goFailure = () => {
+      router.push({ path: '/failure' })
+    }
     return {
       object1,
       gotest,
@@ -97,6 +101,7 @@ export default {
       goinherit,
       goLinkList,
       goLazyImg,
+      goFailure
     }
   },
 };

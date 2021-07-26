@@ -1,0 +1,133 @@
+<!--
+ * @Description: 
+ * @Version: 2.0
+ * @Autor: liushuhao
+ * @Date: 2021-07-12 20:45:25
+ * @LastEditors: liushuhao
+ * @LastEditTime: 2021-07-14 20:33:53
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+    let arr = [{
+            id: 1,
+            name: '部门1',
+            pid: 0
+        },
+        {
+            id: 2,
+            name: '部门2',
+            pid: 1
+        },
+        {
+            id: 3,
+            name: '部门3',
+            pid: 1
+        },
+        {
+            id: 4,
+            name: '部门4',
+            pid: 3
+        },
+        {
+            id: 5,
+            name: '部门5',
+            pid: 4
+        },
+    ]
+    let tree = (node) => {
+        let newTree = arr[0];
+        arr[0].children = [];
+        let test = (node, upData) => {
+            for (let i = 0; i < node.length; i++) {
+                if (upData.id === node[i].pid) {
+                    console.log(node[i], i, 'll');
+                    upData.children = [];
+                    upData.children.push(node[i])
+                    // node.splice(i, 1)
+                }
+            }
+            console.log(newTree);
+
+            // test(node, upData)
+        }
+        test(arr, newTree)
+        console.log(newTree);
+    }
+    // tree(arr)
+    let datas = {
+        "data": [{
+            "id": "111111",
+            "name": "外协根",
+            "parentId": "0",
+            "children": [{
+                    "id": "2222222",
+                    "name": "外协-1",
+                    "parentId": "111111",
+                    "children": [{
+                        "id": "932808249529339904",
+                        "name": "jjj",
+                        "parentId": "2222222",
+                        "children": []
+                    }]
+                },
+                {
+                    "id": "932807545595105280",
+                    "name": "22",
+                    "parentId": "111111",
+                    "children": []
+                }
+            ]
+        }],
+        "success": true,
+        "code": 200,
+        "message": "成功"
+    }
+    let test = (data, id) => {
+        let traversal = (data, id) => {
+            for (let i = 0; i < data.length; i++) {
+                if (data[i].id === id ) {
+                    return data[i]
+                }
+                if (data[i].children && data[i].children.length) {
+                    let result =  traversal(data[i].children, id)
+                    if(result) {
+                        return result
+                    }
+                }
+            }
+            return null
+        }
+        let test =  traversal(data, id)
+    }
+    test(datas.data, '932807545595105280')
+    let a = () => {
+        let b = function(){
+            for (let i = 0; i <3; i++) {
+                x = 2
+            }
+            console.log(x);
+            if (x === 2) {
+                objz = 3
+            }
+        }
+        b()
+
+    }
+    a()
+    console.log(window.objz, '2222');
+
+</script>

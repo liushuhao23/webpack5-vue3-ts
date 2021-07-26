@@ -4,11 +4,11 @@
  * @Autor: liushuhao
  * @Date: 2021-06-30 20:16:15
  * @LastEditors: liushuhao
- * @LastEditTime: 2021-07-02 15:08:55
+ * @LastEditTime: 2021-07-02 20:27:39
 -->
 <template>
   <div class="lazyImg">
-    <div class="imgList" id="imgList">
+    <!-- <div class="imgList" id="imgList">
       <div
         class="img_item"
         :style="{ height: heightw + 'px' }"
@@ -19,7 +19,8 @@
           <img :src="loadingUrl" :data-src="item.url" alt="" class="lazy_img" />
         </div>
       </div>
-    </div>
+    </div> -->
+      <childrens></childrens>
   </div>
 </template>
 
@@ -27,6 +28,8 @@
 import { nextTick, onMounted, reactive, ref, getCurrentInstance, provide, readonly} from "vue";
 import { useRouter } from "vue-router";
 import  childrens from "./children.vue";
+// import  errorBoundary from '../errorBoundaryCom/index.vue'
+
 
 import { debounce, deepClone } from "../../ts/utils";
 
@@ -46,7 +49,7 @@ export default {
     },
   },
   components: {
-    childrens
+    childrens,
   },
   setup(props, ctx) {
     let instance = getCurrentInstance();
@@ -92,6 +95,12 @@ export default {
       heightw,
     };
   },
+   errorCaptured (err, vm, info) {
+       console.log(err, 'err');
+       console.log(vm, 'vm');
+       console.log(info, 'info');
+       return false
+   },
 };
 </script>
 

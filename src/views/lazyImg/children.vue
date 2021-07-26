@@ -4,7 +4,7 @@
  * @Autor: liushuhao
  * @Date: 2021-07-02 15:13:29
  * @LastEditors: liushuhao
- * @LastEditTime: 2021-07-02 15:13:29
+ * @LastEditTime: 2021-07-02 20:27:27
 -->
 <!--
  * @Description: 
@@ -19,7 +19,7 @@
       <span>children</span>
       <button @click="click1">点击</button>
       <button @click="clickoo">点击1</button>
-      <button @click="injectz">点击2</button>
+      <!-- <button @click="injectz">点击2</button> -->
       {{testnn}}
   </div>
 </template>
@@ -37,19 +37,21 @@ interface Data {
 export default {
    props: ['age', 'name'],
    setup(props: Data,  content: SetupContext ) {
+        let errObj = null;
+        errObj.length = 0;
        const click1 = () => {
            content.emit('update:age', 55555);
            content.emit('update:name', 88888);
        };
        let testnn = ref('88888')
-       const parentT: Ref = inject('location');
-       const injectz =() => {
-           parentT.value = 'jjjjjnnnn'
-       }
+    //    const parentT: Ref = inject('location');
+    //    const injectz =() => {
+    //        parentT.value = 'jjjjjnnnn'
+    //    }
      return {
          click1,
          testnn,
-         injectz
+        //  injectz
      }
     },
     methods: {

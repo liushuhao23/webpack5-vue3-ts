@@ -1,0 +1,452 @@
+<!--
+ * @Description: 
+ * @Version: 2.0
+ * @Autor: liushuhao
+ * @Date: 2021-07-05 11:13:44
+ * @LastEditors: liushuhao
+ * @LastEditTime: 2021-07-26 10:30:14
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+    /**
+     * @description: 二进制相加
+     * @param {*} a
+     * @param {*} b
+     * @return {*}
+     * @author: liushuhao
+     */
+    let a = '1010';
+    let b = '1011';
+    var addBinary = function (a, b) {
+        let maxLength = Math.max(a.length, b.length);
+        a = a.padStart(maxLength, 0);
+        b = b.padStart(maxLength, 0);
+        let pre = 0;
+        let res = ''
+        for (let i = maxLength - 1; i >= 0; i--) {
+            let result = (((a[i] * 1) + (b[i] * 1) + pre) % 2) + '';
+            res = result + res;
+            pre = (a[i] * 1) + (b[i] * 1) + pre >= 2 ? 1 : 0;
+        }
+
+        if (pre) {
+            res = (pre + '') + res;
+        }
+        return res;
+    };
+    addBinary(a, b)
+
+    /**
+     * @description: 替换空格
+     * @param {*} s
+     * @return {*}
+     * @author: liushuhao
+     */
+    var replaceSpace = function (s) {
+        s = s.split("");
+        let oldLen = s.length;
+        let spaceCount = 0;
+        for (let i = 0; i < oldLen; i++) {
+            if (s[i] === ' ') spaceCount++;
+        }
+        s.length += spaceCount * 2;
+        for (let i = oldLen - 1, j = s.length - 1; i >= 0; i--, j--) {
+            if (s[i] !== ' ') s[j] = s[i];
+            else {
+                s[j - 2] = '%';
+                s[j - 1] = '2';
+                s[j] = '0';
+                j -= 2;
+            }
+        }
+        return s.join('');
+    };
+    replaceSpace('We are happy.')
+    /**
+     * @description: 只出现一次字符串
+     * @param {*} s
+     * @return {*}
+     * @author: liushuhao
+     */
+    var firstUniqChar = function (s) {
+        let map = new Map();
+        for (let i = 0; i < s.length; i++) {
+            if (map.has(s[i])) {
+                let index = map.get(s[i]);
+                map.set(s[i], index + 1)
+            } else {
+                map.set(s[i], 1);
+            }
+        }
+        let indexz = '';
+        for (const [key, values] of map.entries()) {
+            if (values === 1) {
+                indexz = key
+                break
+            }
+        }
+        return indexz;
+    };
+    firstUniqChar('abbaccddeeff')
+
+    /**
+     * @description: 翻转单词顺序
+     * @param {*} s
+     * @return {*}
+     * @author: liushuhao
+     */
+    var reverseWords = function (s) {
+        let res = []
+        s = s.trim()
+        let i = s.length - 1;
+        j = i;
+        while (i >= 0) {
+            while (i >= 0 && s[i] != ' ') {
+                i--
+            }
+            res.push(s.slice(i + 1, j + 1) + " ");
+            while (i > 0 && s[i] == ' ') {
+                i--
+            }
+            j = i;
+        }
+        let result = ''
+        res.forEach(item => {
+            result += item;
+        });
+        return result.trim()
+    };
+    // console.log(reverseWords("  hello world!  ")); 
+
+    /**
+     * @description: 字符串解码
+     * @param {*} s
+     * @return {*}
+     * @author: liushuhao
+     */
+    const str = '3[a2[cbbc]]'
+    var decodeString = function (s) {
+        // console.log(s);
+        let result = ''
+        let decode = (str, result) => {
+            for (let i = 0; i < str.length; i += 1) {
+                if (str[i] === ']') {
+                    return i
+                }
+                if (str[i] === '[') {
+                    let itemStr = str.substr(i + 1, str.length)
+                    // console.log(itemStr, 'itemStr');
+                    let right = decode(itemStr, result)
+                    // console.log(itemStr, 'itemStr');
+                    // // console.log(right , '222');
+                    // console.log(i, 'left', "+++", right, "right");
+                }
+            }
+        }
+        decode(s, result)
+    };
+    decodeString(str)
+
+    var longestPalindrome = function (s) {
+        let leng = s.length;
+        if (leng < 2) {
+            return s
+        }
+        let Max = 1,
+            begin = 0;
+        let dp = new Array(leng).fill(0).map((item) => new Array(leng).fill(true))
+        for (let i = leng - 1; i >= 0; i--) {
+            for (let j = i + 1; j < leng; j++) {
+                if (s[i] !== s[j]) {
+                    dp[i][j] = false
+                } else {
+                    if (j - i < 3) {
+                        dp[i][j] = true
+                    } else {
+                        dp[i][j] = dp[i + 1][j - 1]
+                    }
+                }
+                if (dp[i][j] === true && j - i + 1 > Max) {
+                    Max = j - i + 1;
+                    begin = i;
+                    // console.log(begin, '2222');
+                    // console.log(Max, '0099');
+                }
+            }
+        }
+        return s.substr(begin, Max)
+    };
+    // console.log(longestPalindrome('cbbd')); 
+
+    var generateParenthesis = function (n) {
+        let arr = []
+        let dfs = (l, r, res) => {
+            if (res.length == 2 * n) {
+                arr.push(res);
+                return
+            }
+            if (l > 0) {
+                dfs(l - 1, r, res + '(')
+            }
+            if (l < r) {
+                dfs(l, r - 1, res + ')')
+            }
+        }
+        dfs(n, n, "");
+        return arr
+    };
+    // console.log(generateParenthesis(2)); 
+    var test11 = (n) => {
+        let arr = [];
+        let num = new Array(2 * n)
+        let index = 0
+        let test333 = (num, index, result) => {
+            if (index === num.length) {
+                let res = ''
+                num.forEach(item => {
+                    res += item;
+                });
+                result.push(res)
+                return
+            }
+            num[index] = '('
+            test333(num, index + 1, result)
+            num[index] = ')'
+            // console.log(index, '2222');
+            test333(num, index + 1, result)
+        }
+        test333(num, index, arr)
+        // console.log(arr, 'kjkk');
+    }
+    test11(2)
+    var combine = function (n, k) {
+        let nArr = [1]
+        for (let i = 1; i < n; i++) {
+            nArr.push(1 + i)
+        }
+        let path = []
+        let result = []
+        let back = (n, k, start) => {
+            if (path.length === k) {
+                result.push([...path])
+                return
+            }
+            for (let i = start; i < n - (k - path.length) + 1; i += 1) {
+                path.push(nArr[i])
+                back(n, k, i + 1)
+                path.pop()
+            }
+        }
+        back(n, k, 0)
+        return result
+    };
+    console.log(combine(4, 4));
+    let testz = (arr) => {
+        let testl = (arr, index) => {
+            for (let i = 0; i < arr.length; i++) {
+                testl(arr, i)
+                console.log(index);
+            }
+        }
+    }
+    // testz([1,2,3,4])
+    // let arr = 
+
+    var combinationSum = function (candidates, target) {
+        let path = []
+        let num = 0;
+        let res = [];
+        let back = (candidates, target, num, start) => {
+            if (num > target) {
+                return
+            }
+            if (num === target) {
+                res.push([...path])
+                return
+            }
+            for (let i = start; i < candidates.length; i++) {
+                if (candidates[i] > target - num) continue;
+                num += candidates[i]
+                path.push(candidates[i])
+                back(candidates, target, num, i)
+                num -= candidates[i]
+                path.pop()
+            }
+        }
+        back(candidates, target, num, 0)
+        return res
+    };
+    combinationSum([2, 5, 7], 4)
+    // var permuteUnique = function(nums) {
+    //     let res = [], path= [], used= [];
+    //     let back= (nums, used) => {
+    //         if (path.length === nums.length) {
+    //             res.push([...path])
+    //             return
+    //         } else {
+    //             for (let i = 0; i < nums.length; i += 1) {
+    //                 if ( i>0 && nums[i] === nums[i - 1] && used[i - 1]) {
+    //                     continue
+    //                 }
+    //                 if (!used[i]) {
+    //                     used[i] = true
+    //                     path.push(nums[i])
+    //                     back(nums, used)
+    //                     path.pop();
+    //                     used[i] = false
+    //                 }
+
+    //             }
+    //         }
+    //     }
+    //     back(nums, used)
+    //     console.log(res);
+    // };
+    var permuteUnique = function (nums) {
+        nums.sort((a, b) => {
+            return a - b
+        })
+        let result = []
+        let path = []
+
+        function backtracing(used) {
+            if (path.length === nums.length) {
+                result.push(path.slice())
+                return
+            }
+            for (let i = 0; i < nums.length; i++) {
+                if (i > 0 && nums[i] === nums[i - 1] && !used[i - 1]) {
+                    continue
+                }
+                if (!used[i]) {
+                    used[i] = true
+                    path.push(nums[i])
+                    backtracing(used)
+                    path.pop()
+                    used[i] = false
+                }
+
+
+            }
+        }
+        backtracing([])
+        return result
+    };
+    console.log(permuteUnique([3, 3, 0, 3]));
+
+    async function async1() {
+        console.log('async1 start');
+        await async2();
+        // new promise((resovle) => {
+        //     new Promise(function (resolve) {
+        //         console.log('promise1');
+        //         resolve();
+        //         }).then(function () {
+        //             console.log('promise2');
+        //     });
+        // }).then(res => {
+        //     console.log('async1 end');
+        // })
+        console.log('async1 end');
+    }
+    async function async2() {
+        //async2做出如下更改：
+        new Promise(function (resolve) {
+            console.log('promise1');
+            resolve();
+        }).then(function () {
+            console.log('promise2');
+        });
+    }
+    console.log('script start');
+
+    setTimeout(function () {
+        console.log('setTimeout');
+    }, 0)
+    async1();
+
+    new Promise(function (resolve) {
+        console.log('promise3');
+        resolve();
+    }).then(function () {
+        console.log('promise4');
+    });
+
+    console.log('script end');
+
+
+
+    // script start
+    // async1 start
+    // promise1
+    // script end
+    // promise3
+    // promise2
+    // async1 end
+    // promise4
+
+
+    // script start
+    // async1 start
+    // promise1
+    // promise3
+    // script end
+    // promise2
+    // async1 end
+    // promise4
+
+    async function a1() {
+        console.log('a1 start')
+        await a2()
+        // new Promise((resolve) => {
+        //     console.log('a2')
+            
+        // }).then(res => {
+        //     console.log('a1 end')
+        // })
+        console.log('a1 end')
+
+    }
+    async function a2() {
+        console.log('a2')
+    }
+
+    console.log('script start')
+
+    setTimeout(() => {
+        console.log('setTimeout')
+    }, 0)
+
+    Promise.resolve().then(() => {
+        console.log('promise1')
+    })
+
+    a1()
+
+    let promise2 = new Promise((resolve) => {
+        resolve('promise2.then')
+        console.log('promise2')
+    })
+
+    promise2.then((res) => {
+        console.log(res)
+        Promise.resolve().then(() => {
+            console.log('promise3')
+        })
+    })
+    console.log('script end')
+</script>
